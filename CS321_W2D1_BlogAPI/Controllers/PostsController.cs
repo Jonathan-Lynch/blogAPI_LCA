@@ -27,7 +27,8 @@ namespace CS321_W2D1_BlogAPI.Controllers
         public IActionResult Get()
         {
             // TODO: return OK 200 status and list of posts
-            return Ok(_postService.GetAll());
+            var post = _postService.GetAll();
+            return Ok(post);
         }
 
         // get specific post by id
@@ -65,9 +66,9 @@ namespace CS321_W2D1_BlogAPI.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Post updatedPost)
         {
-            Post post;
+            
             // TODO: use _postService to update post. store returned Post in the post variable.
-            _postService.Update(updatedPost);
+            var post = _postService.Update(updatedPost);
             if (post == null) return NotFound();
             return Ok(post);
         }
@@ -78,10 +79,11 @@ namespace CS321_W2D1_BlogAPI.Controllers
         public IActionResult Delete(int id)
         {
             // TODO: use _postService to get post by id
+            var post = _postService.Get(id);
             _postService.Get(id);
             if (post == null) return NotFound();
             // TODO: use _postService to remove post
-            _postService.Remove();
+            _postService.Remove(post);
             return NoContent();
         }
     }
